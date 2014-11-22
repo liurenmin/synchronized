@@ -1,0 +1,8 @@
+/usr/share/doc 软件帮助文档
+sync 
+uname -r
+
+将apache做成服务
+httpd.exe -k install -n "servicename"
+卸掉apache服务
+httpd.exe -k uninstall -n "servicename"
