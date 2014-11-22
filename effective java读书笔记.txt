@@ -1,0 +1,110 @@
+如果实例不会变动，则避免多次重复声明
+对不可实例化对象设置私有构造方法，并在方法中抛出异常AssertionException，避免内部调用，一般这种类中只包含静态方法
+对于只需要实例一次的类，设置私有构造方法或者使用枚举类
+删除废弃应用的引用
+慎用finallizer
+
+不要声明类似 public static final array field/accessor(存储器)，这样并没有起到不被修改的效果，有很大的安全隐患，可以使用下面两种方式：
+public static final List<Thing> VALUES =
+Collections.unmodifiableList(Arrays.asList(PRIVATE_VALUES));
+
+
+public static final Thing[] values() {
+return PRIVATE_VALUES.clone();
+}
+
+public类用方法操作属性，不要将属性直接暴露
+
+Item 19 ############################
+不能为了用常量引入接口，而是为了定义类型，这个类型是代表实现它的子类
+
+Item 20 ############################
+当类里面包括特征字段，考虑是否能消除特征字段，而使用类的层次结构表示
+
+Item21 #############################
+使用工具类
+通常用来实现策略模式，通常先定义一个接口，定义要实现的方法，如果这个类值调用一次，一般声明一个内部类实现接口就可以了；如果多次调用则要声明一个内部的静态类，然后在定义一个静态的接口变量
+
+Item22 #############################
+静态内部类比非静态内部类要好，因为非静态内部类会保存外部类的引用，从而浪费了空间
+
+Item23 #############################
+使用raw type不会检查类型，在运行时容易出错，比如直接用Set、List，由于其可以存储任意对象，是不安全的
+Set<Object>可以存放任意对象，Set<?>只能存放指定的对象，这两个是安全的
+
+Item24 #############################
+类型检查的提示非常重要，每一个警告都隐含潜在的运行时错误。消除警告是要确保代码是类型安全的。另外，使用@SuppressWarnings("unchecked")注释时，尽量缩小它的注释范围
+
+Item25 #############################
+arrays 是具体类型，运行时是安全的，在编译时如果不安全则会提示；而generics则相反，编译时不会提示，运行时会提示转型出错；
+
+Item26 #############################
+generic type比较安全和容易被使用，在写代码时尽量不要使用cast
+
+Item27 #############################
+generic method 类似 generic type，是代码更安全，更通用，也更方便
+
+Item28 #############################
+如果合适，首先使用通配符，参数<>是没有父子类的关系的，所以List<Number>不能被插入Interger类型，所以此时就要使用List<? extends Number>，如果一个方法是非常通用的，使用通配符要格外小心
+
+Item29 #############################
+一个方案，将容器key的单一化转化为多样化，可以存储多种类型的value\\
+
+Item30 #############################
+使用枚举类型，使代码阅读更清晰，当有公用方法时，使用The strategy enum pattern
+
+Item31 #############################
+Enum 中使用变量代替ordinals方法
+
+Item32 Use EnumSet instead of bit fields
+EnumSet的使用，可以通过EnumSet将几个枚举类型转化为set
+
+Item33 Use EnumSet instead of ordinal indexing array
+当使用枚举类型数组时，推荐使用EnumSet ，而少使用ordinal 做下标的数组
+
+Item34 Emulate extensible enums with interfaces
+Enum type不能被扩展，此时Enum的扩展可以通过定义并实现一个interface来模仿
+
+Item35 Prefer annotation to naming patterns
+当自动调用某个方法时，之前通常使用名字匹配的方式，在1.5之后可以使用声明的方式进行调用，如果可以使用则尽量使用java自带的这种方式
+
+Item36 Consistently use the override annotation
+使用annotation的习惯能避免很多错误
+
+Item37 Use Marker interfaces to define type
+marker annotations and marker interface 的选用
+
+Item38 Check parameter for validity
+在写方法的时候，要养成检查方法的各种参数的习惯，以免出现各种错误
+
+Item39 Make defensive copies when needed
+如果一个类含有可变的对象，那么当从client获取和返回该对象时，应该保护性的复制这些对象
+
+Item40 Design method signature carefully
+设计方法名称更合理，方法名应该符合规范易懂，方法个数不能过度，方法参数的个数应该控制尽量不超过4个，参数尽量使用接口或抽象类、最好用Enum替换Boolean
+
+Item41 Use overloading judiciously
+谨慎使用重载，重载容易让调用者迷惑。声明不同的方法名来进行替代，如果是构造函数，应避免相同的参数列表能通过不同构造方法，总之调用者必须清楚相同方法名各自的作用
+
+Item42 Use varargs judiciously
+不要滥用varargs，它得到参数后会设置一个数组，浪费一定性能。如果有多个不确定参数，可以写几个重载方法，超过3个时用varargs
+
+Item43 Return empty arrays or collections,not nulls
+最好范围空数组或集合来代替null，如果返回null，调用接口时可能会忘记处理null，使用空数组或集合并不占用太多资源，而且可以使用同一个对象引用
+
+Item44 Write doc comments for all exposed API Comments
+养成写注释的习惯，需要按照统一的格式，HTML标签可以使用，但是内容与标签冲突时需要使用{@literal [content]}
+
+Item45 Minimize the scope of local variables
+缩小变量域，最好使用的时候在声明，缩小变量域避免代码出现错误
+
+Item46 Prefer for-each loops to traditional for loops
+使用for-each方法代替传统的循环，效率不会降低，有些情况还会更高，并且这样也会降低出错
+几种情况不能使用for-each, 1）遍历所有元素过程中删除 2）遍历过程中修改 3）并行遍历多个数组
+
+Item47 Know and use the libraries
+尽量使用java自带的库，基本的库应该看一下，如lang,util
+
+Item48 Avoid float and double if exact answer are required
+当数字的计算结果要求精确时，不要使用float、double类型，如果没有性能要求，用BigDecimall类型，或者使用int、long类型，int是9位,long是18位
+
