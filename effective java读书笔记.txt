@@ -108,3 +108,16 @@ Item47 Know and use the libraries
 Item48 Avoid float and double if exact answer are required
 当数字的计算结果要求精确时，不要使用float、double类型，如果没有性能要求，用BigDecimall类型，或者使用int、long类型，int是9位,long是18位
 
+Item49 Prefer primitive types to boxed primitives
+用primitive类型代替boxed primitives，更简单高效，boxed primitive 有很多陷阱，使用的时候一定要注意，而且浪费了资源
+
+Item50 avoid strings where other types are more appropriate
+避免使用字符串代替其他类型，最容易被替代的包括primitive types, enums, and aggregate types. 
+
+Item52 Refer to objects by their interfaces
+特殊情况下，如果没有合适的借口，就可以使用Object代替，如果有接口就是用接口
+特殊情况包括：
+1）没有接口
+2）在整个系统框架中，只能使用类
+3）接口中不包含其实现类里面提供的特殊方法
+
