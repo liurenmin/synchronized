@@ -114,6 +114,9 @@ Item49 Prefer primitive types to boxed primitives
 Item50 avoid strings where other types are more appropriate
 避免使用字符串代替其他类型，最容易被替代的包括primitive types, enums, and aggregate types. 
 
+Item51 beware of the performance of string concatenation
+注意字符串类型的各种变形的性能，比如多次字符串连接时，使用StringBuilder代替String
+
 Item52 Refer to objects by their interfaces
 特殊情况下，如果没有合适的借口，就可以使用Object代替，如果有接口就是用接口
 特殊情况包括：
