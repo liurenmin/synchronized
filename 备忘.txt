@@ -6,3 +6,5 @@ uname -r
 httpd.exe -k install -n "servicename"
 Ð¶µôapache·þÎñ
 httpd.exe -k uninstall -n "servicename"
+
+test
