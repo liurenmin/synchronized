@@ -137,3 +137,14 @@ JNI可以调用本地方法，但是应尽量避免使用，因为存在很多缺点:
 2）进入和退出native方法都会损失性能
 3）代码不易读
 如果必须要使用，尽量写少量代码且要完全测试
+
+Item55 Optimize judiciously
+合理的进行优化，结构考虑优于只考虑性能，当设计系统和API时考虑性能，设计完之后考虑性能，如果有问题则用profiler定位出问题的部分
+
+Item56 Adhere to generally accepted naming conventions
+遵守通常被接受的命名规则，注意java中的命名规范，注意如果acronym(首字母缩略词位于第一个单词，如果需要小写，则全部小写)
+
+Item57 User exceptions only for exceptional conditions
+异常用于正常需要的地方，不要声称能够提高所谓性能而滥用异常
+
+Item58 use checked exceptions for recoverable conditions and runtime exceptions for programming errors
