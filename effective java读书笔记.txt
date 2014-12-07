@@ -148,3 +148,28 @@ Item57 User exceptions only for exceptional conditions
 异常用于正常需要的地方，不要声称能够提高所谓性能而滥用异常
 
 Item58 use checked exceptions for recoverable conditions and runtime exceptions for programming errors
+在可以恢复异常的情况中使用checked exceptions， 对于不可改变的程序运行异常则使用runtime exception
+
+Item59 Avoid unneccessary use of checked exception
+checked exception用的太多会影响代码的可读性，只有当出现异常的地方是可控的时候才使用checkedException
+
+Item60 Favor the use of standard exceptions
+使用标准异常，常用的jdk已设置的异常：
+Exception Occasion for Use
+IllegalArgumentException Non-null parameter value is inappropriate
+IllegalStateException Object state is inappropriate for method
+invocation
+NullPointerException Parameter value is null where prohibited
+IndexOutOfBoundsException Index parameter value is out of range
+ConcurrentModificationException Concurrent modification of an object has
+been detected where it is prohibited
+UnsupportedOperationException Object does not support method
+使用哪种异常没有绝对的说法，结合异常的介绍具体情况具体分析
+
+Item61 Throw exception appropriate to the abstraction
+对于底层抛出的异常，如果捕获后不太合适处理或不能处理，此时可以将其封装到一个高层的异常中，然后抛出
+
+Item62 Document all exceptions thrown by each method
+记录每一个方法抛出的异常，包括checked和unchecked exception，但是unchecked exception不要在方法声明中用throws抛出，否则用户弄不清楚哪些是checked那些是unchecked
+
+
