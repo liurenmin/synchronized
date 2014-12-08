@@ -172,4 +172,16 @@ Item61 Throw exception appropriate to the abstraction
 Item62 Document all exceptions thrown by each method
 记录每一个方法抛出的异常，包括checked和unchecked exception，但是unchecked exception不要在方法声明中用throws抛出，否则用户弄不清楚哪些是checked那些是unchecked
 
+Item63 Include failure-capture information in detail message
+异常中应该包括尽量详细有效的信息，以供异常处理使用，而且异常信息最好写在constructor中，这样更能保证异常信息的有效
+
+Item64 Strive for failure atomicity
+尽量将错误还原到调用之前
+1）调用之前检查参数
+2）合理安排调用顺序
+3）对备份对象进行操作，然后将对象复制到原对象
+4）写捕获到的错误恢复代码
+
+Item65 Don't ignore exception
+不要忽略异常处理，会留下潜在的危险
 
