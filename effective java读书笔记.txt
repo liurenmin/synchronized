@@ -185,3 +185,45 @@ Item64 Strive for failure atomicity
 Item65 Don't ignore exception
 不要忽略异常处理，会留下潜在的危险
 
+Item66 Synchronize access to shared mutable data
+多线程共享可变数据时，对数据的读写都要使用synchronized
+
+Item67 Avoid excessive synchronization
+Inside a synchronized region, do not invoke a method that is designed to be overridden, or one provided by a client in the form of a function object
+As a rule, you should do as little work as possible inside synchronized regions.
+In summary, to avoid deadlock and data corruption, never call an alien method from within a synchronized region. More generally, try to limit the amount of work that you do from within synchronized regions.
+
+Item68 Prefer executors and tasks to threads
+尽量使用Executor
+
+Item69 Prefer concurrency utilities to wait or notify
+java.util.concurrency : Executer framework,concurrent utilities,synchronizers
+Simply replacing old synchronized maps with concurrent maps can dramatically increase the performance of concurrent applications
+For interval time, always uses System.nanoTime in preference to System.currentTimeMillis. More accurate and precise, it's not effected by adjustments to the system's real-time clock.
+There is seldom, if ever, a reason to use wait or notify in new code. If you maintain code that uses wait and notify, make sure that it always invokes wait from within a while loop using the standard idiom.
+The notifyAll method should generally be used in preference to notify. If notify is used, great care must be taken to ensure liveness.
+
+Item70 Document thread safe
+levels of thread safety : 
+immutable : Instances of this class appear constant.Examples include String, Long, and BigInteger
+
+unconditionally thread-safe :  Instances of this class are mutable, but the class has sufficient internal synchronization that its instances can be used
+concurrently without the need for any external synchronization. Examples include Random and ConcurrentHashMap.
+
+conditionally thread-safe : Like unconditionally thread-safe, except that some methods require external synchronization for safe concurrent use. Examples include the collections returned by the Collections.synchronized wrappers, whose iterators require external synchronization.
+
+not thread-safe : Instances of this class are mutable. To use them concurrently, clients must surround each method invocation (or invocation sequence) with external synchronization of the clients’ choosing. Examples include the general-purpose collection implementations, such as ArrayList and HashMap
+
+Because the private lock object is inaccessible to clients of the class, it is impossible for them to interfere with the object’s synchronization. And this is suitable for inheritance
+
+Item71 Use lazy initialization judiciously
+Under most circumstances, normal initialization is preferable to lazy initialization.
+For instance fields, it is the double-check idiom; for static fields, the lazy initialization holder class idiom. For instance fields that can tolerate repeated initialization, you may also consider the single-check idiom.
+
+Item72 Don't depend on the thread scheduler
+Threads should not run if they aren’t doing useful work.
+A better course of action is to restructure the application to reduce the number of concurrently runnable threads.
+
+Item73 Avoid thread groups
+thread groups are obsolete
+Thread groups are best viewed as an unsuccessful experiment, and you should simply ignore their existence. If you design a class that deals with logical groups of threads, you should probably use thread pool executors
