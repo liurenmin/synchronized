@@ -227,3 +227,24 @@ A better course of action is to restructure the application to reduce the number
 Item73 Avoid thread groups
 thread groups are obsolete
 Thread groups are best viewed as an unsuccessful experiment, and you should simply ignore their existence. If you design a class that deals with logical groups of threads, you should probably use thread pool executors
+
+Item74 Implement serialization judiciously
+As a rule of thumb, value classes such as Date and BigInteger should implement Serializable, as should most collection classes. Classes representing active entities, such as thread pools, should rarely implement Serializable.
+Classes designed for inheritance (Item 17) should rarely implement Serializable, and interfaces should rarely extend it.
+you should consider providing a parameterless constructor on nonserializable classes designed for inheritance.
+Inner classes (Item 22) should not implement Serializable. the default serialized form of an inner class is illdefined. A static member class can, however, implement Serializable. The subclass may assume responsibility for saving and restoring the supertype's public, protected, default fields.
+
+Item75 Consider using a custom serialized
+Note that the first thing writeObject does is to invoke defaultWriteObject, and the first thing readObject does is to invoke defaultReadObject, even though
+all of StringList¡¯s fields are transient.
+Before deciding to make a field nontransient,convince yourself that its value is part of the logical state of the object
+
+Item76 Write readObjects methods defensively
+To summarize, anytime you write a readObject method, adopt the mind-set that you are writing a public constructor that must produce a valid instance regardless
+of what byte stream it is given.
+
+Item77 For instance control, prefer enum types to readResolve
+To summarize, you should use enum types to enforce instance control invariants wherever possible. If this is not possible and you need a class to be both serializable and instance-controlled, you must provide a readResolve method and ensure that all of the class¡¯s instance fields are either primitive or transient.
+
+Item78 Consider serialization proxies instead of serialized instance
+Consider the serialization proxy pattern whenever you find yourself having to write a readObject or writeObject method on a class that is not extendable by its clients. 
